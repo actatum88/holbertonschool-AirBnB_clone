@@ -20,11 +20,11 @@ class BaseModel:
         """
         Prints string representation of the data object
         """
-        return f"[{self.name}] ({self.id}) {self.__dict__}"
+        return "[{self.name}] ({self.id}) {self.__dict__}"
 
     def save(self):
         """
-        For now, simply updates date of the object.
+        Updates date of the object.
         """
         self.updated_at = datetime.now()
 
