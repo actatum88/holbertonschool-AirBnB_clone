@@ -1,29 +1,42 @@
-""" Base model Module """
+#!/usr/bin/python3
+"""
+Base model for AirBnB Project
+"""
 
-import datetime
-from datetime import datetime
 from uuid import uuid4
-timestamp = "%Y-%m-%dT%H:%M:%S.%f"
+from datetime import datetime
 
 
 class BaseModel:
- """ Creates Base Model, define attributes for project. """
-def __init__(self):
-    self.id = str(uuid4())
-    self.created_at = datetime.datetime.now()
-    self.updated_at = datetime.datetime.now()
-        
-def __str__(self):
-    return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
+    """Main Class Body"""
 
-def save(self):
-    """ Updates public instance to current date/time """
-    self.updated_at = datetime.datetime.now()
+    def __init__(self, name="Test"):
+        """ Initializer Function """
+        self.name = name
+        self.id = str(uuid4())
+        self.updated_at = self.created_at = datetime.now()
 
-def to_dict(self):
-    """ Returing a dictionary containing all keys/values of __dict__ """
-    dict_cpy = self.__dict__.copy()
-    dict_cpy['__class__'] = type(self).__class__.__name__
-    dict_cpy['created_at'] = self.created_at.isoformat()
-    dict_cpy['updated_at'] = self.updated_at.isoformat()
-    return dict_cpy
+    def __str__(self):
+        """
+        Prints string representation of the data object
+        """
+        return f"[{self.name}] ({self.id}) {self.__dict__}"
+
+    def save(self):
+        """
+        For now, simply updates date of the object.
+        """
+        self.updated_at = datetime.now()
+
+    def to_dict(self):
+        """
+        Returns a dictionary with all object data.
+        Not complete. Needs to refine the updated/created_at values
+        and add the __class__ key.
+        The --outdict-- variable is where the relevant data is
+        stored, transformed, and returned.
+        """
+        return dict(self.__dict__,
+                    __class__=self.__class__.__name__,
+                    updated_at=self.updated_at.isoformat(),
+                    created_at=self.created_at.isoformat())
