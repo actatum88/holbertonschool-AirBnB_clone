@@ -3,7 +3,7 @@
 import cmd
 import sys
 import models
-from models import storage
+# from models import storage
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -46,25 +46,27 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** class doesn't exist **")
                 
-    def do_show(self, arg):
-        """Prints the string representation of an instance based on the class name and id."""
+    # def do_show(self, arg):
+    #   """Prints the string representation of an instance based on the class name and id."""
         # Usage: show <class name> <id>
-        args = arg.split()
-        if not arg:
-            print("** class name missing **")
-        elif len(args) == 1:
-            print("** instance id missing **")
-        else:
-            class_name, instance_id = args[0], args[1]
-            if class_name in ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]:
-                all_instances = models.storage.all()
-                instance_key = class_name + "." + instance_id
-                if instance_key in all_instances:
-                    print(all_instances[instance_key])
-                else:
-                    print("** no instance found **")
-            else:
-                print("** class doesn't exist **")
+    #   args = arg.split()
+    #   if not arg:
+    #       print("** class name missing **")
+    #  elif len(args) == 1:
+    #      print("** instance id missing **")
+    #   else:
+    #       class_name, instance_id = args[0], args[1]
+    #       if class_name in ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]:
+    #           all_instances = models.storage.all()
+    #           instance_key = class_name + "." + instance_id
+    #           if instance_key in all_instances:
+    #               print(all_instances[instance_key])
+    #           else:
+    #               print("** no instance found **")
+    #       else:
+    #           print("** class doesn't exist **")
+                
+    # def do_destroy
 # code will not be executed when imported
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
