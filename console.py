@@ -23,7 +23,6 @@ class HBNBCommand(cmd.Cmd):
         """Quit the command interpreter on EOF."""        
         exit()
 
-
 # code will not be executed when imported
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
