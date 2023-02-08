@@ -96,7 +96,7 @@ class HBNBCommand(cmd.Cmd):
             class_name = arg.strip()
             if class_name in ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]:
                 all_instances = models.storage.all()
-                instances = [str(instance) for instance in all_instances.values() if type(instance).name == class_name]
+                instances = [str(instance) for instance in all_instances.values() if type(instance).__name__ == class_name]
                 print(instances)
             else:
                 print("** class doesn't exist **")
