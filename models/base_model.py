@@ -24,6 +24,8 @@ class BaseModel:
                     continue
                 else:
                     setattr(self, key, value)
+        else:
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -37,6 +39,8 @@ class BaseModel:
         Updates date of the object.
         """
         self.updated_at = datetime.now()
+        models.storage.save()
+        
 
     def to_dict(self):
         """
