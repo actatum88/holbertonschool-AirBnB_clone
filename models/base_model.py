@@ -11,11 +11,19 @@ import models
 class BaseModel:
     """Main Class Body"""
 
-    def __init__(self, name="Test"):
+    def __init__(self, *args, **kwargs):
         """ Initializer Function """
-        self.name = name
         self.id = str(uuid4())
         self.updated_at = self.created_at = datetime.now()
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    setattr(self, key, datetime.strptime(value, time_format))
+                elif key == "__class__":
+                    continue
+                else:
+                    setattr(self, key, value)
 
     def __str__(self):
         """
