@@ -9,6 +9,13 @@ from models.review import Review
 from models.state import State
 from models.user import User
 import json
+from os import path
+
+
+# string - path to the JSON file (ex: file.json)
+__file_path = "file.json"
+ # dictionary - empty but will store all objects by <class name>.id
+__objects = {}
 
 
 class_keys = {"BaseModel": BaseModel, "Amenity": Amenity, "City": City,
@@ -42,4 +49,35 @@ class FileStorage:
             (only if the JSON file (__file_path) exists;
             otherwise, do nothing. If the file doesn’t exist,
             no exception should be raised)"""
-        #Deserialization reconstructs an object from the serialized form.
+        from models.base_model import BaseModel
+        from models.amenity import Amenity
+        from models.city import City
+        from models.place import Place
+        from models.review import Review
+        from models.state import State
+        from models.user import User
+
+        # manage serialization and deserialization of all classes
+        class_names = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
+        }
+        # if the file doesn’t exist, no exception should be raised
+        if not path.exists(self.__file_path):
+            pass
+        # if the file doesn’t exist, no exception should be raised
+        elif path.getsize(self.__file_path) == 0:
+            pass
+        # deserializes the JSON file to __objects
+        else:
+            with open(self.__file_path, 'r') as f:
+                json_dict = json.load(f)
+            for key, value in json_dict.items():
+                classes = class_names.get(key.split('.')[0])
+                self.__objects[key] = classes(**value)
+        
