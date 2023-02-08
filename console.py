@@ -100,7 +100,38 @@ class HBNBCommand(cmd.Cmd):
                 print(instances)
             else:
                 print("** class doesn't exist **")
-            
+    
+    def do_update(self, arg):
+        """Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file)."""
+    #Usage: update <class name> <id> <attribute name> "<attribute value>"
+        args = arg.split()
+        if not arg:
+            print("** class name missing **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        elif len(args) == 2:
+            print("** attribute name missing **")
+        elif len(args) == 3:
+            print("** value missing **")
+        elif len(args) >= 4:
+            class_name, instance_id, attr_name, attr_value = args[0], args[1], args[2], args[3]
+            if class_name in ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]:
+                all_instances = models.storage.all()
+                instance_key = class_name + "." + instance_id
+                if instance_key in all_instances:
+                    instance = all_instances[instance_key]
+                    if attr_name in ["email", "password", "first_name", "last_name"]:
+                        setattr(instance, attr_name, attr_value)
+                    elif attr_name in ["number_rooms", "number_bathrooms", "max_guest", "price_by_night"]:
+                        setattr(instance, attr_name, int(attr_value))
+                    elif attr_name in ["latitude", "longitude", "x", "y"]:
+                        setattr(instance, attr_name, float(attr_value))
+                    instance.save()
+                else:
+                    print("** no instance found **")
+            else:
+                print("** class doesn't exist **")
+                
 # code will not be executed when imported
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
