@@ -5,6 +5,7 @@ Base model for AirBnB Project
 
 from uuid import uuid4
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -20,7 +21,8 @@ class BaseModel:
         """
         Prints string representation of the data object
         """
-        return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
+        class_name = self.__class__.__name__
+        return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
 
     def save(self):
         """
